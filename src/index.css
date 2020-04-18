@@ -58,8 +58,9 @@ span.mode:hover{
     color: blue;
     background-color: azure;
 }
-
-
+#entry-point {
+    display:block;
+}
 
 #footer {
     width: 100%;
