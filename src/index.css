@@ -1,8 +1,4 @@
-.tree {
-    border: 1px solid grey;
-    /* padding:5px;
-    height:300px; */
-}
+
 .ta {
     height: 300px;
     width:100%;
@@ -52,24 +48,33 @@ span.mode:hover{
     white-space: pre-wrap;
     overflow: auto;
 }
-li {
-    list-style-type:none;
-}
+
 #analyze {
-    margin-left: 20px;
+    margin-left: 15px;
     margin-top: 10px;
 }
+
 .highlighted {
     color: blue;
     background-color: azure;
 }
 
-.card {
-    margin-top: 5em;
+
+
+#footer {
+    width: 100%;
+    display:block;
+    background-color: #f5f5f5;
+    padding: 15px;
+    left: 0;
+    bottom: 0;
+    margin-top: 5rem;
+    text-align: center;
 }
 .footer-dark {
     background-color: #343a40 !important;
     color:#bbe1fa !important;
+    width: 100%;
 }
 a {
     text-decoration: none; color: #5AA2A7;
