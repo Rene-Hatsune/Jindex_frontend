@@ -23,8 +23,8 @@ var resultJson = {
     "IR": ""
 };
 
-var isDarkMode = false;
-function changeColorMode(isDarkMode) {
+
+function changeColorMode() {
     let background = document.body;
     background.classList.toggle("dark-mode");
     let element = document.getElementById("nav");
@@ -39,15 +39,6 @@ function changeColorMode(isDarkMode) {
     editor.classList.toggle("bg-dark");
     let code = document.getElementById("code");
     code.classList.toggle("code-dark");
-
-    if (isDarkMode) {
-        
-        isDarkMode = !isDarkMode;
-        let mode = document.getElementsByClassName("mode");
-        
-        mode.innerText = "Light Mode";
-    }
-    
 }
 
 function getInputCode() {
