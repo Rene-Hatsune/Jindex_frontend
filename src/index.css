@@ -7,6 +7,30 @@
     height: 300px;
     width:100%;
 }
+
+span.mode {
+    color: #007bff;
+    text-decoration: none;
+}
+
+span.mode:hover{
+    color:#0056b3;
+    text-decoration: underline;
+}
+
+.intro-dark {
+    background-color: #263859 !important; 
+    color: #ffffff;
+}
+.dark-mode {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.code-dark {
+    background-color: #343a40;
+    color: #ffffff;
+}
 .code-input {
     width: inherit; 
     margin: auto; 
@@ -21,12 +45,12 @@
     position: absolute;
     padding:5px;
     top: 0;
-    right: 5px;;
+    right: 0px;
     bottom: 0;
     left: 5px;
-    background-color: beige;
+    background-color: #e9ecef;
     white-space: pre-wrap;
-    overflow: scroll;
+    overflow: auto;
 }
 li {
     list-style-type:none;
@@ -43,7 +67,10 @@ li {
 .card {
     margin-top: 5em;
 }
-
+.footer-dark {
+    background-color: #343a40 !important;
+    color:#bbe1fa !important;
+}
 a {
     text-decoration: none; color: #5AA2A7;
     border: solid 1px rgba(255,255,255,0);

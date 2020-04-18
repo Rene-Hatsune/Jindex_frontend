@@ -23,6 +23,33 @@ var resultJson = {
     "IR": ""
 };
 
+var isDarkMode = false;
+function changeColorMode(isDarkMode) {
+    let background = document.body;
+    background.classList.toggle("dark-mode");
+    let element = document.getElementById("nav");
+    
+    element.classList.toggle("navbar-dark");
+    element.classList.toggle("bg-dark");
+    let jumbo = document.getElementById("intro");
+    jumbo.classList.toggle("intro-dark");
+    let footer = document.getElementById("footer");
+    footer.classList.toggle("footer-dark");
+    let editor = document.getElementById("editor");
+    editor.classList.toggle("bg-dark");
+    let code = document.getElementById("code");
+    code.classList.toggle("code-dark");
+
+    if (isDarkMode) {
+        
+        isDarkMode = !isDarkMode;
+        let mode = document.getElementsByClassName("mode");
+        
+        mode.innerText = "Light Mode";
+    }
+    
+}
+
 function getInputCode() {
     let input = document.getElementById("code").value;
     innerHTML = "<p>"+input+"</p>";
@@ -253,13 +280,13 @@ function clearHighlight() {
   }
 }
 
-window.onload = function (e) {
-  var tags = document.getElementsByTagName("span");
-  for (var i = 0; i < tags.length; i++) {
-    tags[i].onmouseover = function (event) {
-      clearHighlight();
-      var hid = event.toElement.getAttribute("class");
-      highlight(hid);
-    };
-  }
-};
+// window.onload = function (e) {
+//   var tags = document.getElementsByTagName("span");
+//   for (var i = 0; i < tags.length; i++) {
+//     tags[i].onmouseover = function (event) {
+//       clearHighlight();
+//       var hid = event.toElement.getAttribute("class");
+//       highlight(hid);
+//     };
+//   }
+// };
