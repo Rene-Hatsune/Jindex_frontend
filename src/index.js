@@ -1,35 +1,27 @@
-// 1. highlight animation
-// 2. connectied graph
-// 3. if possible show files structure in tree form for multiple file uploading
+
 
 var resultJson = {
-    "point-to-map": {
-        "(21 14)": "(25 17)",
-        "(25 17)": "(30 14)",
-        "(30 14)": "(14 9)"
-    },
-    "CFG": {
-        "(18 8)": "(18 8)",
-        "(19 8)": "(20 8)",
-        "(20 8)": "(21 8)",
-        "(21 8)": "(26 8)",
-        "(26 8)": "(27 8)",
-        "(27 8)": "(28 8)",
-        "(28 8)": "(9 8)",
-        "(9 8)": "(29 8)",
-        "(29 8)": "(30 8)",
-        "(30 8)": "(31 8)",
-        "(31 8)": "☠"
-    },
+    "point-to-map": [
+        ["(21 14)", "(25 17)"],
+        ["(25 17)", "(30 14)"],
+        ["(30 14)", "(14 9)"]
+    ]
+    ,
+    "CFG": [
+        ["(18 8)", "(18 8)"],
+        ["(19 8)", "(20 8)"],
+        ["(20 8)", "(21 8)"],
+        ["(21 8)", "(26 8)"],
+        ["(26 8)", "(27 8)"],
+        ["(27 8)", "(28 8)"],
+        ["(28 8)", "(9 8)"],
+        ["(9 8)", "(29 8)"],
+        ["(29 8)", "(30 8)"],
+        ["(30 8)", "(31 8)"],
+        ["(31 8)", "☠"]
+    ],
     "IR": ""
 };
-// console.log(resultJson);
-// var editor = ace.edit("editor");
-// editor.setTheme("ace/theme/light");
-// //monokai");
-// editor.session.setMode("ace/mode/javascript");
-
-
 
 function getInputCode() {
     let input = document.getElementById("code").value;
@@ -85,11 +77,12 @@ function postCode() {
 }
 
 function getCoordinator() {
-    fetch('http://example.com/movies.json')
+    fetch('http://example.com/test.json')
         .then((response) => {
             return response.json();
         })
         .then((data) => {
+           
             console.log(data);
         });
 }
@@ -97,38 +90,25 @@ function getCoordinator() {
 function handleSubmit() {
     retriveJson(resultJson);
     let input = str2Array();
-    // let codePanel = document.getElementById("editor");
-    // let content = '';
-    // for (let i = 0; i< input.length; i++) {
-    //     content += "<p>" + input[i] + "</p>";
-    // }
-    // codePanel.innerHTML = content;
+    
 }
 
-extractJSONOject = obj => {
-    const arr = [];
-    Object.entries(obj).forEach(([key, value]) => {
-        arr.push([key, value]);
-        // console.log([key, value]);
-    });
-    return arr;
-}
-
+//turn input text into string array based on line number
 str2Array = () => {
     let codeStr = document.getElementById("code").value;
     let lines = codeStr.split('\n');
     return lines;
 }
 
-
+// massive mess, most of the things handle inside this funct
 function retriveJson(resultJson) {
   let object = resultJson; //JSON.parse(res);
-  let ptToMap = object["point-to-map"];
+  let ptToMap = object["point-to-map"];//[][]
   let cfg = object.CFG;
   let ir = object.IR;
-  var pt2Map = extractJSONOject(ptToMap);
-  var cfgPos = extractJSONOject(cfg);
-  var irPos = extractJSONOject(ir);
+
+  //pt2Map[0][0] -> 0 row 0 col string:"(21 14)""
+ 
   let lines = str2Array();
   // typeof(pt2Map[0][0]) -> string
   // let minX = lines.length;
@@ -138,6 +118,7 @@ function retriveJson(resultJson) {
   let dest = [];
   let yO = [];
   let yD = [];
+
   for (let i = 0; i < pt2Map.length; i++) {
     let posO = pt2Map[i][0].split(" ");
     let posD = pt2Map[i][1].split(" ");
@@ -161,8 +142,8 @@ function retriveJson(resultJson) {
     // displayHighlighetedCode(xO[i], yO[i], originY);
     // let destY = locateKeyword(lines, dest[i][0], dest[i][1]);
   }
- console.log(origin);
- console.log(dest);
+  console.log(origin);
+  console.log(dest);
   displayCodePanel(origin, dest);
 };
 
