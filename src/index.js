@@ -60,7 +60,7 @@ function postCode() {
         code: input,
      };
 
-    fetch('https://example.com/profile', {
+    fetch('https://example.com/', {
         method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
@@ -119,9 +119,9 @@ function retriveJson(resultJson) {
   let yO = [];
   let yD = [];
 
-  for (let i = 0; i < pt2Map.length; i++) {
-    let posO = pt2Map[i][0].split(" ");
-    let posD = pt2Map[i][1].split(" ");
+  for (let i = 0; i < ptToMap.length; i++) {
+      let posO = ptToMap[i][0].split(" ");
+      let posD = ptToMap[i][1].split(" ");
     origin.push([posO[0].match(/\d+/), posO[1].match(/\d+/)]);
     dest.push([posD[0].match(/\d+/), posD[1].match(/\d+/)]);
     
