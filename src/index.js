@@ -2,9 +2,10 @@ var resultJson = {
   "point-to-map": [
     ["(21 14)", "(25 17)"],
     ["(25 17)", "(30 14)"],
-    ["(30 14)", "(14 9)"],
-  ],
-  CFG: [
+    ["(30 14)", "(14 9)"]
+  ]
+  ,
+  "CFG": [
     ["(18 8)", "(18 8)"],
     ["(19 8)", "(20 8)"],
     ["(20 8)", "(21 8)"],
@@ -15,9 +16,9 @@ var resultJson = {
     ["(9 8)", "(29 8)"],
     ["(29 8)", "(30 8)"],
     ["(30 8)", "(31 8)"],
-    ["(31 8)", "☠"],
+    ["(31 8)", "☠"]
   ],
-  IR: "",
+  "IR": ""
 };
 
 function changeColorMode() {
@@ -42,75 +43,45 @@ function getInputCode() {
   innerHTML = "<p>" + input + "</p>";
 }
 
-// document.getElementById("analyze").addEventListener('click', handleSubmit);
+/**
+ * start from here
+ */
 
-function uploadMultiFiles() {
-  const formData = new FormData();
-  const codeBlock = document.querySelector('input[type="file"][multiple]');
-
-  formData.append("JavaCode", "JavaFile");
-  for (let i = 0; i < codeBlock.files.length; i++) {
-    formData.append("files", codeBlock.files[i]);
-  }
-
-  fetch("https://example.com/posts", {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then((result) => {
-      console.log("Success:", result);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
-
-function postCode() {
-  let entryPoint = document.getElementById("entry-point").value;
-  let input = document.getElementById("code").value;
-  const data = {
-    entry: entryPoint,
-    code: input,
-  };
-
-  fetch("https://example.com/", {
+/**
+ * Handler for click on "Analyze" button
+ * 
+ * send code into backend using fetch
+ * for demo just use fake URL here
+ */
+function handleSubmit() {
+  // retriveJson(resultJson);
+  let code = document.getElementById("code").value;
+  let position = document.getElementById("entry-point").value;
+  fetch('http://localhost:8080/analyze', {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      ir: code,
+      start: position
+    }),
+    mode: 'cors'
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
-
-function getCoordinator() {
-  fetch("http://example.com/test.json")
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+      console.log(data)
     });
-}
-
-function handleSubmit() {
-  retriveJson(resultJson);
-  let input = str2Array();
 }
 
 //turn input text into string array based on line number
 str2Array = () => {
   let codeStr = document.getElementById("code").value;
-  let lines = codeStr.split("\n");
+  let lines = codeStr.split('\n');
   return lines;
-};
+}
 
 // massive mess, most of the things handle inside this funct
 function retriveJson(resultJson) {
