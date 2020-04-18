@@ -1,54 +1,101 @@
-.tree {
-    border: 1px solid grey;
-    /* padding:5px;
-    height:300px; */
-}
 .ta {
-    height: 300px;
-    width:100%;
+  height: 300px;
+  width: 100%;
+}
+
+span.mode {
+  color: #007bff;
+  text-decoration: none;
+}
+
+span.mode:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.intro-dark {
+  background-color: #263859 !important;
+  color: #ffffff;
+}
+.dark-mode {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.code-dark {
+  background-color: #343a40;
+  color: #ffffff;
 }
 .code-input {
-    width: inherit; 
-    margin: auto; 
-    margin-top: 10px;
+  width: inherit;
+  margin: auto;
+  margin-top: 10px;
 }
 
-#code{
-    font-size: large;
+#code {
+  font-size: large;
 }
 
-#editor { 
-    position: absolute;
-    padding:5px;
-    top: 0;
-    right: 5px;;
-    bottom: 0;
-    left: 5px;
-    background-color: beige;
-    white-space: pre-wrap;
-    overflow: scroll;
+#editor {
+  position: absolute;
+  padding: 5px;
+  top: 0;
+  right: 0px;
+  bottom: 0;
+  left: 5px;
+  background-color: #e9ecef;
+  white-space: pre-wrap;
+  overflow: auto;
 }
-li {
-    list-style-type:none;
-}
+
 #analyze {
-    margin-left: 20px;
-    margin-top: 10px;
+  margin-left: 15px;
+  margin-top: 10px;
 }
+
 .highlighted {
-    color: blue;
-    background-color: azure;
+  color: blue;
+  background-color: azure;
+}
+#entry-point {
+  display: block;
 }
 
-.card {
-    margin-top: 5em;
+textarea {
+  background: url(http://i.imgur.com/2cOaJ.png);
+  background-attachment: local;
+  background-repeat: no-repeat;
+  padding-left: 35px;
+  padding-top: 10px;
+  border-color: #ccc;
+  line-height: 16px;
 }
 
+#footer {
+  width: 100%;
+  display: block;
+  background-color: #f5f5f5;
+  padding: 15px;
+  left: 0;
+  bottom: 0;
+  margin-top: 5rem;
+  text-align: center;
+}
+.footer-dark {
+  background-color: #343a40 !important;
+  color: #bbe1fa !important;
+  width: 100%;
+}
 a {
-    text-decoration: none; color: #5AA2A7;
-    border: solid 1px rgba(255,255,255,0);
+  text-decoration: none;
+  color: #5aa2a7;
+  border: solid 1px rgba(255, 255, 255, 0);
 }
 a.active {
-    background: -webkit-linear-gradient(top,rgba(255, 255, 200, 0.35) 0,rgba(255, 255, 200, 0.55) 100%);
-    border: solid 1px #E5E600;
+  background: -webkit-linear-gradient(
+    top,
+    rgba(255, 255, 200, 0.35) 0,
+    rgba(255, 255, 200, 0.55) 100%
+  );
+  border: solid 1px #e5e600;
 }

@@ -19,14 +19,14 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="container-fluid">
-            <nav class="navbar navbar-light bg-light">
+            <nav class="navbar " id="nav">
                 <span class="navbar-brand mb-0 h1">Jindex</span>
-                <span class="navbar mb-0 ">Get Started</span>
-                <span class="navbar mb-0 ">Color Schemes</span>
-                <span class="navbar mb-0">About Us</span>
+                <span class="navbar mb-0 "><a href="#intro">Get Started</a></span>
+                <span class="navbar mb-0 mode" onclick="changeColorMode()">Dark Mode</span>
+                <span class="navbar mb-0"><a href="#footer">About Us</a></span>
             </nav>
 
-            <div class="jumbotron jumbotron-fluid">
+            <div class="jumbotron jumbotron-fluid" id="intro">
                 <div class="container">
                     <h1 class="display-4">Jindex</h1>
                     <p class="lead">A online syntax indexer system.</p>
@@ -38,7 +38,8 @@
                 <!-- <form id="code-form" > onsubmit="handleSubmit()"action="url" method="GET" enctype="multipart/form-data" -->
                     <div class="col">
                         <div class="input-group">
-                            <input type="text" id="entry-point" placeholder="Enter a coordinator of your code that is the entry point for Jindex." required/>
+                            <input type="text" id="entry-point" placeholder="Enter coords for entry like 38,8" required/>
+                           
                             <div class="custom-file">
                                 <input type="file" multiple class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
                                 <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
@@ -62,25 +63,15 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    About Us
-                </div>
-                <div class="card-body text-center">
-                    <h5 class="card-title">Jindex</h5>
-                    <p class="card-text">CSE687 Object-oriented Design</p>
-                    <a href="#" class="btn btn-primary">Github</a>
-                </div>
-
-            </div>
+            
         </div> 
             
-        
+        <footer  id="footer">
+            <h5>Jindex</h5>
+            <p class="">CSE687 Object-oriented Design, 2020 Spring, <a href="https://github.com/StarGazerM/jindex" >Github</a></p> 
+                
+        </footer>
     
-    
-        
-           
-
         
         <script src="index.js" ></script>
         <script src="https://pagecdn.io/lib/ace/1.4.8/ace.js" crossorigin="anonymous"
