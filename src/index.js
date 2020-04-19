@@ -1,3 +1,15 @@
+/**
+ * js front end
+ * 
+ * 
+ * Rene Hatsune
+ * Yihao Sun <ysun67@syr.edu>
+ */
+
+// no idea why lodash change the name of this...
+// and alais back
+var foldl = _.reduce;
+
 var resultJson = {
   "point-to-map": [
     ["(21 14)", "(25 17)"],
@@ -22,16 +34,84 @@ var resultJson = {
 };
 
 // some code map look up and util function 
+/** 
+ * pred of a point
+ * 
+ */
+function predPt(ptMap, point) {
+  return foldl(
+    ptMap,
+    (res, p) => {
+      if (p[1] === point) {
+        res.push(p);
+        return res;
+      } else {
+        return res;
+      }
+    },
+    []
+  );
+}
 
 /**
- * find all code point related to one
+ * successor of a point
+ */
+function succPt(ptMap, point) {
+  return foldl(
+    ptMap,
+    (res, p) => {
+      if (p[0] === point) {
+        res.push(p);
+        return p;
+      } else {
+        return res;
+      }
+    },
+    []
+  );
+}
+
+/**
+ * find all code point has path to a point
  * 
  * findRelated :: PointToMap -> Point -> [Point]
  */
-// function findRealted(ptMap, point, ) {
+function findRelated(ptMap, point) {
+  let getAllPred = (pt) => {
+    let next = predPt(ptMap, pt);
+    if (next === []) {
+      return [next];
+    } else {
+      return _.flatMap(next, getAllPred);
+    }
+  }
 
-// }
+  let getAllSucc = (pt) => {
+    let pre = predPt(ptMap, pt);
+    if (pre === []) {
+      return [pre];
+    } else {
+      return _.flatMap(pre, getAllSucc);
+    }
+  }
+  let preds = getAllPred(point);
+  let succs = getAllSucc(point);
+  return _.concat(preds, succs);
+}
 
+/**
+ * change a CodeMirror point into sexpr pair `(,from ,to)
+ */
+function pointToString(pt) {
+  let ln = pt.line + 1;
+  let col = pt.ch;
+  return `(${ln} ${col})`;
+} 
+
+function stringToPoint(ptS) {
+  let ss = ptS.slice(1, -1).split(" ");
+  return {line: (ss[0] - 1), ch: ss[1]};
+}
 
 function changeColorMode() {
   let background = document.body;
@@ -63,7 +143,7 @@ function getInputCode() {
  * Code panel initialization
  * 
  */
-var codeMirror = CodeMirror(function(elt){
+var codeMirror = CodeMirror(function (elt) {
   let editor = document.getElementById('editor');
   editor.parentNode.replaceChild(elt, editor);
 }, {
@@ -71,7 +151,24 @@ var codeMirror = CodeMirror(function(elt){
   mode: "text/x-java",
   lineNumbers: true,
   readOnly: true,
-  viewportMargin: Infinity
+  viewportMargin: Infinity,
+  configureMouse: (cm, repeat, event) => {
+    // view double/single click the same
+    // trible click for line
+    // and all even
+    cm.getCursor("from");
+    let u = "word";
+    if (repeat === "triple") {
+      u = "line";
+    }
+    return { unit: u };
+  }
+});
+
+// register function on select
+codeMirror.on("cursorActivity", (cm) => {
+  let cur = cm.getCursor("from");
+  console.log(cur);
 });
 
 /**
@@ -86,23 +183,39 @@ function handleSubmit() {
   let code = document.getElementById("code").value;
   let position = document.getElementById("entry-point").value;
   codeMirror.setValue(code);
-  // fetch('http://localhost:8080/analyze', {
-  //   method: "POST",
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({
-  //     ir: code,
-  //     start: position
-  //   }),
-  //   mode: 'cors'
-  // })
-  //   .then((response) => {
-  //     return response.json();
-  //   })
-  //   .then((data) => {
-  //     console.log(data)
-  //   });
+  fetch('http://localhost:8080/analyze', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ir: code,
+      start: position
+    }),
+    mode: 'cors'
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      resultJson = data;
+      console.log(data);
+      // create listener on selection of code~
+      codeMirror.on("cursorActivity", (cm) => {
+        let currentCur = cm.getCursor("from");
+        let cur = pointToString(cm.getCursor("from"));
+        console.log(cur);
+        let related = findRelated(data['point-to-map'], cur);
+        // related.push(cur);
+        // put current selected always at last, so we can always select
+        // it as primary
+        // add selection for each relpts
+        let relPts = _.map(related, stringToPoint);
+        console.log(relPts);
+        relPts.push(cm.getCursor("from"));
+        cm.setSelections(_.map(relPts, cm.findWordAt), (length - 1));
+      })
+    });
 }
 
 
