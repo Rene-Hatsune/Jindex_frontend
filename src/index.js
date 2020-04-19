@@ -76,6 +76,19 @@ function handleSubmit() {
     });
 }
 
+/**
+ * Code panel initialization
+ * 
+ */
+var codeMirror = CodeMirror(function(elt){
+  let editor = document.getElementById('editor');
+  editor.parentNode.replaceChild(elt, editor);
+}, {
+  value: "void myScript(){return 100;}\n class Foo(){}\n",
+  mode: "text/x-java",
+});
+
+
 //turn input text into string array based on line number
 str2Array = () => {
   let codeStr = document.getElementById("code").value;
