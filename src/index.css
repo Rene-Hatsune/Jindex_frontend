@@ -62,7 +62,7 @@ span.mode:hover {
   display: block;
 }
 
-textarea {
+/* textarea {
   background: url(http://i.imgur.com/2cOaJ.png);
   background-attachment: local;
   background-repeat: no-repeat;
@@ -70,7 +70,7 @@ textarea {
   padding-top: 10px;
   border-color: #ccc;
   line-height: 16px;
-}
+} */
 
 #footer {
   width: 100%;
