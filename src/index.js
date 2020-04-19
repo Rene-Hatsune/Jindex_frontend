@@ -48,6 +48,20 @@ function getInputCode() {
  */
 
 /**
+ * Code panel initialization
+ * 
+ */
+var codeMirror = CodeMirror(function(elt){
+  let editor = document.getElementById('editor');
+  editor.parentNode.replaceChild(elt, editor);
+}, {
+  value: "void myScript(){return 100;}\n class Foo(){}\n",
+  mode: "text/x-java",
+  lineNumbers: true,
+  readOnly: true
+});
+
+/**
  * Handler for click on "Analyze" button
  * 
  * send code into backend using fetch
@@ -55,6 +69,7 @@ function getInputCode() {
  */
 function handleSubmit() {
   // retriveJson(resultJson);
+  // update code panel
   let code = document.getElementById("code").value;
   let position = document.getElementById("entry-point").value;
   fetch('http://localhost:8080/analyze', {
@@ -76,17 +91,7 @@ function handleSubmit() {
     });
 }
 
-/**
- * Code panel initialization
- * 
- */
-var codeMirror = CodeMirror(function(elt){
-  let editor = document.getElementById('editor');
-  editor.parentNode.replaceChild(elt, editor);
-}, {
-  value: "void myScript(){return 100;}\n class Foo(){}\n",
-  mode: "text/x-java",
-});
+
 
 
 //turn input text into string array based on line number
