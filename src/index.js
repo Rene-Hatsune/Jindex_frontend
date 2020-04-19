@@ -21,6 +21,25 @@ var resultJson = {
   "IR": ""
 };
 
+var myTextarea = document.getElementById("code");
+var textArea = CodeMirror.fromTextArea(myTextarea, {
+  lineNumbers: true,
+  mode: "text/x-java",
+  matchBrackets: true,
+});
+
+var codeMirrorEditor = document.getElementById("editor");
+let input = document.getElementById("code").value;
+var codeEditor = CodeMirror(codeMirrorEditor, {
+  value:input,
+  lineNumbers: true,
+  mode: "text/x-java",
+  matchBrackets: true,
+});
+
+
+
+
 function changeColorMode() {
   let background = document.body;
   background.classList.toggle("dark-mode");
@@ -54,26 +73,28 @@ function getInputCode() {
  * for demo just use fake URL here
  */
 function handleSubmit() {
-  // retriveJson(resultJson);
-  let code = document.getElementById("code").value;
-  let position = document.getElementById("entry-point").value;
-  fetch('http://localhost:8080/analyze', {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      ir: code,
-      start: position
-    }),
-    mode: 'cors'
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data)
-    });
+  retriveJson(resultJson);
+  // let code = document.getElementById("code").value;
+  // let position = document.getElementById("entry-point").value;
+  // fetch('http://localhost:8080/analyze', {
+  //   method: "POST",
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify({
+  //     ir: code,
+  //     start: position
+  //   }),
+  //   mode: 'cors'
+  // })
+  //   .then((response) => {
+  //     return response.json();
+  //   })
+  //   .then((data) => {
+  //     console.log(data)
+  //   })
+  //   .catch((error) =>
+  //     console.error("Error: ", error));
 }
 
 //turn input text into string array based on line number
@@ -115,8 +136,8 @@ function retriveJson(resultJson) {
 
 locateKeyword = (lines, x, y) => {
   // x=21, y=17,counting start from 1, minus one for retrival
-  let newX = x - 1;
-  let newY = y - 1;
+  let newX = x; //- 1;
+  let newY = y; //- 1;
   let newStr = lines[newX].substring(newY); //0, newY
   // console.log(newStr);
   var newString = newStr.replace(/\W+/g, " ");
@@ -125,6 +146,14 @@ locateKeyword = (lines, x, y) => {
 
   let posStart = newY;
   let posEnd = lines[newX].lastIndexOf(selection);
+  codeEditor.markText(
+    { line: newX, ch: posStart },
+    { line: newX, ch: posEnd },
+    {
+      className: "highlighted",
+      inclusiveRight: true,
+    }
+  );
   console.log("word is " + selection);
   return posEnd;
 };
@@ -135,27 +164,28 @@ displayCodePanel = (origin, dest) => {
   let content = "";
   let regContent = "";
   let keywordContent = "";
-  for (let i = 0; i < codeLength; i++) {
-    if (!origin.includes(i) && !dest.includes(i)) {
-      regContent = displayRegCode(content, i);
-      // console.log(regContent);
-      content += regContent;
-    } else {
-      for (let j = 0; j < origin.length; j++) {
-        if (origin[j][0] === i && dest[j][0] !== i) {
-          let endY = locateKeyword(lines, origin[j][0], origin[j][1]);
-          keywordContent = displayHighlighetedCode(i, origin[j][1], endY);
-        }
-        if (!origin[j][0] !== i && dest[j][0] === i) {
-          let endY = locateKeyword(lines, dest[j][0], dest[j][1]);
-          keywordContent = displayHighlighetedCode(i, dest[j][1], endY);
-        }
-        console.log(keywordContent);
-        content += keywordContent;
-      }
-    }
-  }
-  document.getElementById("editor").innerHTML = content;
+  
+  // for (let i = 0; i < codeLength; i++) {
+  //   if (!origin.includes(i) && !dest.includes(i)) {
+  //     regContent = displayRegCode(content, i);
+  //     // console.log(regContent);
+  //     content += regContent;
+  //   } else {
+  //     for (let j = 0; j < origin.length; j++) {
+  //       if (origin[j][0] === i && dest[j][0] !== i) {
+  //         let endY = locateKeyword(lines, origin[j][0], origin[j][1]);
+  //         keywordContent = displayHighlighetedCode(i, origin[j][1], endY);
+  //       }
+  //       if (!origin[j][0] !== i && dest[j][0] === i) {
+  //         let endY = locateKeyword(lines, dest[j][0], dest[j][1]);
+  //         keywordContent = displayHighlighetedCode(i, dest[j][1], endY);
+  //       }
+  //       console.log(keywordContent);
+  //       content += keywordContent;
+  //     }
+  //   }
+  // }
+  // document.getElementById("editor").innerHTML = content;
 };
 
 displayRegCode = (content, pos) => {
