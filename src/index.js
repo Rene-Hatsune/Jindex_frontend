@@ -21,6 +21,14 @@ var resultJson = {
   "IR": ""
 };
 
+// some code map look up and util function 
+
+/**
+ * find all code point in a line
+ */
+
+ 
+
 function changeColorMode() {
   let background = document.body;
   background.classList.toggle("dark-mode");
@@ -72,23 +80,24 @@ function handleSubmit() {
   // update code panel
   let code = document.getElementById("code").value;
   let position = document.getElementById("entry-point").value;
-  fetch('http://localhost:8080/analyze', {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      ir: code,
-      start: position
-    }),
-    mode: 'cors'
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data)
-    });
+  codeMirror.setValue(code);
+  // fetch('http://localhost:8080/analyze', {
+  //   method: "POST",
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify({
+  //     ir: code,
+  //     start: position
+  //   }),
+  //   mode: 'cors'
+  // })
+  //   .then((response) => {
+  //     return response.json();
+  //   })
+  //   .then((data) => {
+  //     console.log(data)
+  //   });
 }
 
 

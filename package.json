@@ -1,5 +1,13 @@
 {
   "dependencies": {
-    "codemirror": "^5.52.2"
-  }
+    "codemirror": "^5.52.2",
+    "lodash": "^4.17.15"
+  },
+  "name": "Jindex_frontend",
+  "version": "1.0.0",
+  "description": "www",
+  "main": "index.js",
+  "repository": "https://github.com/Rene-Hatsune/Jindex_frontend.git",
+  "author": "stagazermiao <stargazermiao@gmail.com>",
+  "license": "MIT"
 }
