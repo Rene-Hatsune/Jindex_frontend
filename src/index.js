@@ -72,6 +72,7 @@ function succPt(ptMap, point) {
 }
 
 /**
+ console.log();
  * find all code point has path to a point
  * 
  * findRelated :: PointToMap -> Point -> [Point]
@@ -79,24 +80,17 @@ function succPt(ptMap, point) {
 function findRelated(ptMap, point) {
   let getAllPred = (pt) => {
     let next = predPt(ptMap, pt);
-    if (next === []) {
-      return [next];
-    } else {
-      return _.flatMap(next, getAllPred);
-    }
+    return _.flattenDeep(_.map(next, getAllPred).concat(next));
   }
 
   let getAllSucc = (pt) => {
     let pre = predPt(ptMap, pt);
-    if (pre === []) {
-      return [pre];
-    } else {
-      return _.flatMap(pre, getAllSucc);
-    }
+    return _.flattenDeep(_.map(pre, getAllSucc).concat(pre));  
   }
   let preds = getAllPred(point);
   let succs = getAllSucc(point);
-  return _.concat(preds, succs);
+
+  return _.union(preds, succs);
 }
 
 /**
@@ -110,7 +104,8 @@ function pointToString(pt) {
 
 function stringToPoint(ptS) {
   let ss = ptS.slice(1, -1).split(" ");
-  return {line: (ss[0] - 1), ch: ss[1]};
+ // console.log(`${(parseInt(ss[0]) - 1)}`)
+  return {line: (parseInt(ss[0]) - 1), ch: parseInt(ss[1])};
 }
 
 function changeColorMode() {
@@ -204,16 +199,18 @@ function handleSubmit() {
       codeMirror.on("cursorActivity", (cm) => {
         let currentCur = cm.getCursor("from");
         let cur = pointToString(cm.getCursor("from"));
-        console.log(cur);
         let related = findRelated(data['point-to-map'], cur);
         // related.push(cur);
         // put current selected always at last, so we can always select
         // it as primary
         // add selection for each relpts
         let relPts = _.map(related, stringToPoint);
-        console.log(relPts);
         relPts.push(cm.getCursor("from"));
-        cm.setSelections(_.map(relPts, cm.findWordAt), (length - 1));
+        let res = [];
+        for (let i = 0; i < relPts.length; i++) {
+          res.push(cm.findWordAt(relPts[i]));
+        }
+        cm.setSelections(res, (relPts.length - 1));
       })
     });
 }
