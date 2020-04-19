@@ -100,3 +100,8 @@ a.active {
   );
   border: solid 1px #e5e600;
 }
+
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
