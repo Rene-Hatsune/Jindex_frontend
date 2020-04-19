@@ -24,10 +24,14 @@ var resultJson = {
 // some code map look up and util function 
 
 /**
- * find all code point in a line
+ * find all code point related to one
+ * 
+ * findRelated :: PointToMap -> Point -> [Point]
  */
+// function findRealted(ptMap, point, ) {
 
- 
+// }
+
 
 function changeColorMode() {
   let background = document.body;
@@ -66,7 +70,8 @@ var codeMirror = CodeMirror(function(elt){
   value: "void myScript(){return 100;}\n class Foo(){}\n",
   mode: "text/x-java",
   lineNumbers: true,
-  readOnly: true
+  readOnly: true,
+  viewportMargin: Infinity
 });
 
 /**
