@@ -152,34 +152,105 @@ function getInputCode() {
  * set line number as the label of cfg
  */
 function getLineNumber(cfgPt) {
-  let lineNumber = cfgPt.slice(1,  -1).split(" ");
+  
+  let lineNumber = cfgPt.slice(1, -1).split(" ");
   return lineNumber[0];
+}
+
+function getLink(source, target) {
+  return "{ source:" + source +", target:"+target+"}";
+}
+
+getLinkings = () => {
+  let nodes = getNodes();
+  let linkString = '';
+  let links = [];
+  for (let i = 0; i < nodes.length; i += 2) {
+    linkString = getLink(nodes[i], nodes[i + 1]);
+    links.push(linkString);
+  }
+  return links;
+}
+
+
+function getNodes(){
+  let cfgRaw = resultJson.CFG;
+  let nodes = [];
+  for (let i=0; i<cfgRaw.length; i++){
+    for(let j= 0; j<cfgRaw[i].length;j++){
+      let coordStr = cfgRaw[i][j].slice(1,-1);
+      let ln = coordStr.split(" ");
+      // console.log(ln);
+      nodes.push(ln[0]);
+    }
+  }
+  
+  return nodes;
+}
+
+function getData() {
+  let nodes = getNodes();
+  let cur = 0;
+  let data = [];
+  let x = 300;
+  let y = 100;
+  for(let i =0; i<nodes.length; i++){
+    if (cur !== nodes){
+      cur = nodes[i];
+      y += 100
+      dataStr = "{name: line"+cur+",x:"+x+",y:"+y+"}";
+      data.push(dataStr);
+    }
+  }
+  return data;
 }
 /**
  * Echarts.js initialization for control flow graph
  */
 var chart = document.getElementById("chart");
+// getNodes();
+let data = getData();
+console.log(data);
+let links = getLinkings();
 var cfgChart = echarts.init(chart);
- var option = {
-   title: {
-     text: "ECharts 入门示例",
-   },
-   tooltip: {},
-   legend: {
-     data: ["销量"],
-   },
-   xAxis: {
-     data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
-   },
-   yAxis: {},
-   series: [
-     {
-       name: "销量",
-       type: "bar",
-       data: [5, 20, 36, 10, 10, 20],
-     },
-   ],
- };
+var option = {
+  title: {
+    text: "Control Flow Graph",
+  },
+  tooltip: {},
+  series: [
+    {
+      name: "CFG",
+      type: "graph",
+      layout: "none",
+      symbolSize: 50,
+      roam: true,
+      label: {
+        show: true,
+      },
+      edgeSymbol: ["circle", "arrow"],
+      edgeSymbolSize: [4, 10],
+      edgeLabel: {
+        fontSize: 20,
+      },
+      data: 
+      [{
+                name: '节点1',
+                x: 300,
+                y: 300
+            }, {
+                name: '节点2',
+                x: 800,
+                y: 300
+            }],
+      //  data,
+      links: [{
+                source: '节点2',
+                target: '节点1'}],
+      // links,
+    },
+  ],
+};
 cfgChart.setOption(option);
 
 function showCFG() {
@@ -235,7 +306,7 @@ function showIR() {
   irDisplay.style.height = (irDisplay.scrollHeight+3) + "px";
   let data = resultJson;
   let irStr = data["IR"];
-  console.log(irStr);
+  // console.log(irStr);
   irDisplay.value = irStr;
 }
 
@@ -292,8 +363,6 @@ function handleSubmit() {
       })
     });
 }
-
-
 
 
 //turn input text into string array based on line number
