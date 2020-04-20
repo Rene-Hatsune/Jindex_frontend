@@ -11,10 +11,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/node_modules/codemirror/lib/codemirror.css">
         <link rel="stylesheet" href="index.css">
-
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        
+        <script src="/node_modules/echarts/dist/echarts.simple.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -37,35 +36,39 @@
             </div>
 
             <div class="row code-input" >
-                <!-- <form id="code-form" > onsubmit="handleSubmit()"action="url" method="GET" enctype="multipart/form-data" -->
-                    <div class="col">
-                        <div class="input-group">
-                            <input type="text" id="entry-point" placeholder="Enter coords for entry like 38,8" required/>
-                           
-                            <div class="custom-file">
-                                <input type="file" multiple class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-                                <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Upload</button>
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <textarea id="code" class="ta" aria-label="With textarea" placeholder="Type in Java syntax"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" id="analyze" onclick="handleSubmit()">Analyze</button>
-                    </div>
-                    
-                <!-- </form> -->
                 <div class="col">
-                    <div id="editor">
+                    <div class="input-group">
+                        <input type="text" id="entry-point" placeholder="Enter coords for entry like 38,8" required/>
                         
+                        <div class="custom-file">
+                            <input type="file" multiple class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+                            <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Upload</button>
+                        </div>
                     </div>
+
+                    <div class="input-group">
+                        <textarea id="code" class="ta" aria-label="With textarea" placeholder="Type in Java syntax"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="analyze" onclick="handleSubmit()">Analyze</button>
+                </div>
+                
+                <div class="col">
+                    <div id="editor"></div>
                 </div>
             </div>
-            
+            <div class="row" style="margin-top: 2rem;">
+                <div class="col" >
+                    <textarea name="ir" id="IR" cols="45" rows="10" readonly></textarea>
+                    
+                </div>
+                <div class="col">
+                    <div id="chart" style="width: 500px;height:400px;"></div>
+                </div>
+            </div>
         </div> 
             
         <footer  id="footer">
@@ -78,8 +81,8 @@
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
         <script src="/node_modules/codemirror/lib/codemirror.js"></script>
-        
         <script src="/node_modules/codemirror/mode/clike/clike.js"></script>
+   
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
         <script src="index.js" ></script>
     </body>

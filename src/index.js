@@ -30,9 +30,8 @@ var resultJson = {
     ["(30 8)", "(31 8)"],
     ["(31 8)", "☠"]
   ],
-  "IR": ""
+  "IR": "1"
 };
-
 
 // some code map look up and util function 
 /** 
@@ -150,6 +149,81 @@ function getInputCode() {
 }
 
 /**
+ * set line number as the label of cfg
+ */
+function getLineNumber(cfgPt) {
+  let lineNumber = cfgPt.slice(1,  -1).split(" ");
+  return lineNumber[0];
+}
+/**
+ * Echarts.js initialization for control flow graph
+ */
+var chart = document.getElementById("chart");
+// var cfgChart = echarts.init(chart);
+//  graph.nodes.forEach(function (node) {
+//    node.itemStyle = null;
+//    node.value = node.symbolSize;
+//    node.symbolSize /= 1.5;
+//    node.label = {
+//      show: node.symbolSize > 30,
+//    };
+//    node.category = node.attributes.modularity_class;
+//  });
+// var option = {
+//   title: {
+//     text: "Control Flow Graph",
+//   },
+//   tooltip: {},
+//   layout: "none",
+//   symbolSize: 50,
+//   roam: true,
+//   label: {
+//     show: true,
+//   },
+//   edgeSymbol: ["circle", "arrow"],
+//   edgeSymbolSize: [4, 10],
+//   edgeLabel: {
+//     fontSize: 20,
+//   },
+//   series: [
+//     {
+//       name: "销量", //line of code
+//       type: "graph",
+//       layout: "none",
+//       data: graph.nodes,
+//       links: graph.links,
+//       roam: true,
+//       focusNodeAdjacency: true,
+//       itemStyle: {
+//           borderColor: '#fff',
+//           borderWidth: 1,
+//           shadowBlur: 10,
+//           shadowColor: 'rgba(0, 0, 0, 0.3)'
+//       },
+//       label: {
+//           position: 'right',
+//           formatter: '{b}'
+//       },
+//       lineStyle: {
+//           color: 'source',
+//           curveness: 0.3
+//       },
+//       emphasis: {
+//           lineStyle: {
+//               width: 10
+//           }
+//       }
+//     },
+//   ],
+// };
+// cfgChart.setOption(option);
+
+function showCFG() {
+  var chart = document.getElementById("chart");
+  chart.style.display = "block";
+}
+
+/**
  * start from here
  */
 
@@ -187,6 +261,20 @@ codeMirror.on("cursorActivity", (cm) => {
 });
 
 /**
+ * 
+ * @param {*} IR 
+ * @param {*} string 
+ */
+function showIR() {
+  let irDisplay = document.getElementById("IR");
+  irDisplay.style.display = "block";
+  let data = resultJson;
+  let irStr = data["IR"];
+  console.log(irStr);
+  irDisplay.value = irStr;
+}
+
+/**
  * Handler for click on "Analyze" button
  * 
  * send code into backend using fetch
@@ -194,6 +282,8 @@ codeMirror.on("cursorActivity", (cm) => {
  */
 function handleSubmit() {
   // retriveJson(resultJson);
+  showIR();/////////////////////////////////remember to change location when network works////////////
+  showCFG();
   // update code panel
   let code = document.getElementById("code").value;
   let position = document.getElementById("entry-point").value;
@@ -215,6 +305,7 @@ function handleSubmit() {
     .then((data) => {
       resultJson = data;
       console.log(data);
+      
       // create listener on selection of code~
       codeMirror.on("cursorActivity", (cm) => {
         let ptMap = data['point-to-map'];

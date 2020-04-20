@@ -114,3 +114,13 @@ a.active {
     background-color: #212121 !important;
     color: #EEFFFF;
 }
+
+.ir-display {
+    margin-top: 2rem;
+}
+#IR {
+    display:none;
+}
+#chart {
+    display:none;
+}
