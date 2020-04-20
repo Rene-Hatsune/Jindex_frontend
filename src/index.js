@@ -194,12 +194,17 @@ function getData() {
   let data = [];
   let x = 300;
   let y = 100;
+  let cnt = 0;
   // let dataStr = 
   for(let i =0; i<nodes.length; i++){
     if (cur !== nodes[i]){
       cur = nodes[i];
-      y += 200
-      let nameStr = "Ln "+cur;
+      
+      x+=600;
+      cnt +=1;
+      if(cnt%4 ===0){
+        y +=1000;
+      }
       dataStr = {name:cur,x:x,y:y};;
       data.push(dataStr);
     }
@@ -219,7 +224,10 @@ var option = {
   title: {
     text: "Control Flow Graph",
   },
-  tooltip: {},
+  tooltip: {
+    trigger: "item",
+    formatter: "line number:{b0}",
+  },
   series: [
     {
       name: "CFG",
@@ -236,8 +244,14 @@ var option = {
         fontSize: 20,
       },
       data: data,
-     
       links: links,
+      focusNodeAdjacency: true,
+      itemStyle: {
+        borderColor: "#fff",
+        borderWidth: 1,
+        shadowBlur: 5,
+        shadowColor: "rgba(0, 0, 0, 0.3)",
+      },
       lineStyle: {
         opacity: 0.9,
         width: 3,
