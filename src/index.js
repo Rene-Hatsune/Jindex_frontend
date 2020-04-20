@@ -30,7 +30,7 @@ var resultJson = {
     ["(30 8)", "(31 8)"],
     ["(31 8)", "☠"]
   ],
-  "IR": "1"
+  "IR": ""
 };
 
 // some code map look up and util function 
@@ -268,6 +268,7 @@ codeMirror.on("cursorActivity", (cm) => {
 function showIR() {
   let irDisplay = document.getElementById("IR");
   irDisplay.style.display = "block";
+  irDisplay.style.height = (irDisplay.scrollHeight+3) + "px";
   let data = resultJson;
   let irStr = data["IR"];
   console.log(irStr);

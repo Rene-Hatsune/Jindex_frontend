@@ -120,6 +120,7 @@ a.active {
 }
 #IR {
     display:none;
+    width:100%;
 }
 #chart {
     display:none;
