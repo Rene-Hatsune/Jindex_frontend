@@ -158,7 +158,7 @@ function getLineNumber(cfgPt) {
 }
 
 function getLink(source, target) {
-  return "{ source:" + source +", target:"+target+"}";
+  return { source:source, target:target};
 }
 
 getLinkings = () => {
@@ -194,11 +194,13 @@ function getData() {
   let data = [];
   let x = 300;
   let y = 100;
+  // let dataStr = 
   for(let i =0; i<nodes.length; i++){
-    if (cur !== nodes){
+    if (cur !== nodes[i]){
       cur = nodes[i];
-      y += 100
-      dataStr = "{name: line"+cur+",x:"+x+",y:"+y+"}";
+      y += 200
+      let nameStr = "Line "+cur;
+      dataStr = {name:cur,x:x,y:y};;
       data.push(dataStr);
     }
   }
@@ -223,7 +225,7 @@ var option = {
       name: "CFG",
       type: "graph",
       layout: "none",
-      symbolSize: 50,
+      symbolSize: 15,
       roam: true,
       label: {
         show: true,
@@ -233,21 +235,23 @@ var option = {
       edgeLabel: {
         fontSize: 20,
       },
-      data: 
-      [{
-                name: '节点1',
-                x: 300,
-                y: 300
-            }, {
-                name: '节点2',
-                x: 800,
-                y: 300
-            }],
+      data: data,
+      // [{
+      //           name: '节点1',
+      //           x: 300,
+      //           y: 300
+      //       }, {
+      //           name: '节点2',
+      //           x: 800,
+      //           y: 300
+      //       }],
       //  data,
-      links: [{
-                source: '节点2',
-                target: '节点1'}],
-      // links,
+      links: links,
+      lineStyle: {
+        opacity: 0.9,
+        width: 2,
+        curveness: 0,
+      },
     },
   ],
 };
