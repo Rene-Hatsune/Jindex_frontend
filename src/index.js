@@ -159,64 +159,28 @@ function getLineNumber(cfgPt) {
  * Echarts.js initialization for control flow graph
  */
 var chart = document.getElementById("chart");
-// var cfgChart = echarts.init(chart);
-//  graph.nodes.forEach(function (node) {
-//    node.itemStyle = null;
-//    node.value = node.symbolSize;
-//    node.symbolSize /= 1.5;
-//    node.label = {
-//      show: node.symbolSize > 30,
-//    };
-//    node.category = node.attributes.modularity_class;
-//  });
-// var option = {
-//   title: {
-//     text: "Control Flow Graph",
-//   },
-//   tooltip: {},
-//   layout: "none",
-//   symbolSize: 50,
-//   roam: true,
-//   label: {
-//     show: true,
-//   },
-//   edgeSymbol: ["circle", "arrow"],
-//   edgeSymbolSize: [4, 10],
-//   edgeLabel: {
-//     fontSize: 20,
-//   },
-//   series: [
-//     {
-//       name: "销量", //line of code
-//       type: "graph",
-//       layout: "none",
-//       data: graph.nodes,
-//       links: graph.links,
-//       roam: true,
-//       focusNodeAdjacency: true,
-//       itemStyle: {
-//           borderColor: '#fff',
-//           borderWidth: 1,
-//           shadowBlur: 10,
-//           shadowColor: 'rgba(0, 0, 0, 0.3)'
-//       },
-//       label: {
-//           position: 'right',
-//           formatter: '{b}'
-//       },
-//       lineStyle: {
-//           color: 'source',
-//           curveness: 0.3
-//       },
-//       emphasis: {
-//           lineStyle: {
-//               width: 10
-//           }
-//       }
-//     },
-//   ],
-// };
-// cfgChart.setOption(option);
+var cfgChart = echarts.init(chart);
+ var option = {
+   title: {
+     text: "ECharts 入门示例",
+   },
+   tooltip: {},
+   legend: {
+     data: ["销量"],
+   },
+   xAxis: {
+     data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+   },
+   yAxis: {},
+   series: [
+     {
+       name: "销量",
+       type: "bar",
+       data: [5, 20, 36, 10, 10, 20],
+     },
+   ],
+ };
+cfgChart.setOption(option);
 
 function showCFG() {
   var chart = document.getElementById("chart");
