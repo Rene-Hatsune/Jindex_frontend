@@ -199,7 +199,7 @@ function getData() {
     if (cur !== nodes[i]){
       cur = nodes[i];
       y += 200
-      let nameStr = "Line "+cur;
+      let nameStr = "Ln "+cur;
       dataStr = {name:cur,x:x,y:y};;
       data.push(dataStr);
     }
@@ -225,32 +225,23 @@ var option = {
       name: "CFG",
       type: "graph",
       layout: "none",
-      symbolSize: 15,
+      symbolSize: 20,
       roam: true,
       label: {
         show: true,
       },
       edgeSymbol: ["circle", "arrow"],
-      edgeSymbolSize: [4, 10],
+      edgeSymbolSize: [4, 15],
       edgeLabel: {
         fontSize: 20,
       },
       data: data,
-      // [{
-      //           name: '节点1',
-      //           x: 300,
-      //           y: 300
-      //       }, {
-      //           name: '节点2',
-      //           x: 800,
-      //           y: 300
-      //       }],
-      //  data,
+     
       links: links,
       lineStyle: {
         opacity: 0.9,
-        width: 2,
-        curveness: 0,
+        width: 3,
+        curveness: 0.5,
       },
     },
   ],
