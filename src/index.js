@@ -33,6 +33,7 @@ var resultJson = {
   "IR": ""
 };
 
+
 // some code map look up and util function 
 /** 
  * pred of a point
@@ -43,7 +44,7 @@ function predPt(ptMap, point) {
     ptMap,
     (res, p) => {
       if (p[1] === point) {
-        res.push(p);
+        res.push(p[0]);
         return res;
       } else {
         return res;
@@ -61,8 +62,8 @@ function succPt(ptMap, point) {
     ptMap,
     (res, p) => {
       if (p[0] === point) {
-        res.push(p);
-        return p;
+        res.push(p[1]);
+        return res;
       } else {
         return res;
       }
@@ -71,7 +72,17 @@ function succPt(ptMap, point) {
   );
 }
 
+/** 
+ * clean self loop
+ */
+function cleanSelfPoint (ptMap) {
+  return _.filter(ptMap, (p) => {
+    return !(p[0] === p[1]);
+  })
+}
+
 /**
+ * 
  console.log();
  * find all code point has path to a point
  * 
@@ -79,17 +90,24 @@ function succPt(ptMap, point) {
  */
 function findRelated(ptMap, point) {
   let getAllPred = (pt) => {
-    let next = predPt(ptMap, pt);
-    return _.flattenDeep(_.map(next, getAllPred).concat(next));
+    let pre = predPt(ptMap, pt);
+    if (pre === []) {
+      return []
+    }
+    return _.flattenDeep(_.map(pre, getAllPred).concat(pre));
   }
 
   let getAllSucc = (pt) => {
-    let pre = predPt(ptMap, pt);
-    return _.flattenDeep(_.map(pre, getAllSucc).concat(pre));  
+    let next = succPt(ptMap, pt);
+    if (next === []) {
+      return [];
+    }
+    return _.flattenDeep(_.map(next, getAllSucc).concat(next));  
   }
   let preds = getAllPred(point);
   let succs = getAllSucc(point);
-
+  // console.log(`preds are ${preds}`);
+  // console.log(`succs are ${succs}`);
   return _.union(preds, succs);
 }
 
@@ -161,6 +179,7 @@ var codeMirror = CodeMirror(function (elt) {
   }
 });
 
+
 // register function on select
 codeMirror.on("cursorActivity", (cm) => {
   let cur = cm.getCursor("from");
@@ -198,15 +217,17 @@ function handleSubmit() {
       console.log(data);
       // create listener on selection of code~
       codeMirror.on("cursorActivity", (cm) => {
+        let ptMap = data['point-to-map'];
+        ptMap = cleanSelfPoint(ptMap);
         let currentCur = cm.getCursor("from");
-        let cur = pointToString(cm.getCursor("from"));
-        let related = findRelated(data['point-to-map'], cur);
+        let cur = pointToString(currentCur);
+        let related = findRelated(ptMap, cur);
         // related.push(cur);
         // put current selected always at last, so we can always select
         // it as primary
         // add selection for each relpts
         let relPts = _.map(related, stringToPoint);
-        relPts.push(cm.getCursor("from"));
+        relPts.push(currentCur);
         let res = [];
         for (let i = 0; i < relPts.length; i++) {
           res.push(cm.findWordAt(relPts[i]));
