@@ -119,10 +119,11 @@ function changeColorMode() {
   jumbo.classList.toggle("intro-dark");
   let footer = document.getElementById("footer");
   footer.classList.toggle("footer-dark");
-  let editor = document.getElementById("editor");
-  editor.classList.toggle("bg-dark");
   let code = document.getElementById("code");
-  code.classList.toggle("code-dark");
+  code.classList.toggle("cmirror-dark");
+  let editor = document.getElementsByClassName("CodeMirror");
+  // element.classList.toggle("cmirror-dark");
+  editor.classList.toggle("cmirror-dark");
 }
 
 function getInputCode() {
