@@ -2,7 +2,7 @@
   "dependencies": {
     "codemirror": "^5.52.2",
     "echarts": "^4.7.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.21"
   },
   "name": "Jindex_frontend",
   "version": "1.0.0",
